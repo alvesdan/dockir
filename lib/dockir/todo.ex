@@ -52,16 +52,17 @@ defmodule Dockir.Todo do
     save_to_file!
   end
 
-  def search({key, value}) do
-    search({key, value}, allow_multiple: false)
+  def search({key, regex}) do
+    search({key, regex}, allow_multiple: false)
   end
 
-  def search({key, value}, opts \\ []) do
+  def search({key, regex}, opts \\ []) do
     todos = Todo.list
     |> Enum.filter(fn(todo) ->
       case Map.fetch(todo, key) do
-        {:ok, v} -> Regex.match?(~r/#{value}/i, v)
+        {:ok, v} -> Regex.match?(regex, v)
         {:error} -> false
+        _ -> false
       end
     end)
 

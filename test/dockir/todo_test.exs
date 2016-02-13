@@ -36,7 +36,7 @@ CA69F35988AD1EE27921392C6D0F630C    Buy bread    false
   test "it deletes todos" do
     Todo.add "Call the doctor"
     Todo.add "Pick up keys"
-    Todo.delete {:task, "keys"}
+    Todo.delete {:task, ~r/keys/}
 
     assert Todo.list |> Enum.count == 1
   end
@@ -45,16 +45,16 @@ CA69F35988AD1EE27921392C6D0F630C    Buy bread    false
     Todo.add "Call the doctor"
     Todo.add "Call the company"
 
-    assert Todo.delete({:task, "call"}) == {:error, "Multiple todos matching the given criteria"}
+    assert Todo.delete({:task, ~r/call/i}) == {:error, "Multiple todos matching the given criteria"}
   end
 
   test "it completes the task" do
     Todo.add "Call the doctor"
     Todo.add "Pick up keys"
 
-    Todo.toggle {:task, "keys"}
+    Todo.toggle {:task, ~r/keys/}
 
-    {:ok, todo} = Todo.search({:task, "keys"})
+    {:ok, todo} = Todo.search({:task, ~r/keys/})
     assert todo.done == true
   end
 
@@ -62,6 +62,6 @@ CA69F35988AD1EE27921392C6D0F630C    Buy bread    false
     Todo.add "Call the doctor"
     Todo.add "Call the company"
 
-    assert Todo.search({:task, "call"}, allow_multiple: true) |> Enum.count == 2
+    assert Todo.search({:task, ~r/call/i}, allow_multiple: true) |> Enum.count == 2
   end
 end
