@@ -4,7 +4,7 @@ I am using this project to study Elixir.
 
 ## How it works?
 
-The application has an Agent running and mantaining the state of the Todo list. The `start_link` method loads the list from a file and on every change of state it persists the changes to the file again.
+The application has an Agent running and maintaining the state of the Todo list. The `start_link` method loads the list from a file and on every change of state it persists the changes to the file again.
 
 ```elixir
 alias Dockir.Todo
